@@ -1,5 +1,7 @@
 
-from blog import app
+from blog import create_app
+
+app = create_app()
 
 ### Run
 if __name__ == '__main__':

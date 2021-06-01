@@ -1,48 +1,49 @@
 from flask import Flask
-
 # Extensions
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, login_manager
 from flask_mail import Mail
 
-from dotenv import load_dotenv
-import os
+# custom
+from blog.config import Config
 
-### App 
-app = Flask(__name__)
-
-### Config
-# provide secret key 
-# import secrets
-# secrets.token_hex(16)
-app.config['SECRET_KEY']= 'herbert'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-
-load_dotenv()
-
-app.config['MAIL_SERVER'] = os.environ.get('MAIL_SERVER')
-app.config['MAIL_PORT'] = os.environ.get('MAIL_PORT')
-app.config['MAIL_USE_TLS'] = os.environ.get('MAIL_USE_TLS')
-app.config['MAIL_ADDRESS'] = os.environ.get('MAIL_ADDRESS')
-app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
-app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 
 ### Register extensions
 ### Database
-db = SQLAlchemy(app)
+db = SQLAlchemy()
 ### encryption
 # how does it work? are there alternatives?
-bcrypt = Bcrypt(app)
+bcrypt = Bcrypt()
 ### Login Manager
 # flask-login
-login_manager = LoginManager(app)
-login_manager.login_view = 'login'
+login_manager = LoginManager()
+login_manager.login_view = 'users.login'
 login_manager.login_message = "User needs to be logged in to view this page"
 login_manager.login_message_category = "warning"
 ### Mail ###
-mail = Mail(app)
+mail = Mail()
 
 
-### Import routes
-from blog import routes
+def create_app(config_class = Config):
+    ### App 
+    app = Flask(__name__)
+    app.config.from_object(Config)
+    
+    db.init_app(app)
+    bcrypt.init_app(app)
+    login_manager.init_app(app)
+    mail.init_app(app)
+
+    # Blueprint registration
+    from blog.main.routes import main
+    from blog.users.routes import users
+    from blog.posts.routes import posts
+    from blog.errors.handler import errors
+
+    app.register_blueprint(main)
+    app.register_blueprint(users)
+    app.register_blueprint(posts)
+    app.register_blueprint(errors)
+
+    return app

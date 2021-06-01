@@ -45,13 +45,13 @@
                 <div class="form-group pt-4">
                     {{ form.submit(class="btn btn-outline-info") }}
                     <small class="text-muted">
-                        <a href="{{ url_for('reset_request') }}">Forgot Password</a>
+                        <a href="{{ url_for('users.reset_request') }}">Forgot Password</a>
                     </small>
                 </div>
 
                 <div class="form-group pt-1">
                     <small class="text-muted">
-                        <a href="{{ url_for('reset_request') }}">Forgot Password</a>
+                        <a href="{{ url_for('users.reset_request') }}">Forgot Password</a>
                     </small>
                 </div>
             </fieldset>
@@ -59,7 +59,7 @@
     </div>
     <div class="border-top pt-1">
         <small class="text-muted">
-            Don't have an account? <a class="ml-2" href="{{ url_for('login') }}">Register</a>
+            Don't have an account? <a class="ml-2" href="{{ url_for('users.login') }}">Register</a>
         </small>
 
     </div>

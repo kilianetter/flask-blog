@@ -4,9 +4,8 @@ from blog.models import User
 # flask_wtf
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
-from wtforms.validators import DataRequired, Length, EqualTo, Email, email, ValidationError
-
+from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms.validators import DataRequired, Length, EqualTo, Email, ValidationError
 
 ### User ###
 class RegistrationForm(FlaskForm):
@@ -59,13 +58,6 @@ class UpdateAccountForm(FlaskForm):
             user = User.query.filter_by(email=email.data).first()
             if user:
                 raise ValidationError('Sorry, this email is already in use!')
-
-
-### Post ###
-class CreatePostForm(FlaskForm):
-    title = StringField('Title', validators=[DataRequired()])
-    content = TextAreaField('Content', validators=[DataRequired()])
-    submit = SubmitField('Post')
 
 
 ### Password Reset ###
