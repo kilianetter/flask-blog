@@ -1,0 +1,34 @@
+# environment #
+###############
+.venv/
+.vscode/
+**config.*
+.env
+.code-workspace
+
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+__pycache__/
+
+
+# folders #
+###########
+
+
+# OS files #
+############
+.DS_Store
+
+# database files #
+##################
+*.db
+
+# coverage files
+.coverage
+
+
+
