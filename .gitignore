@@ -1,8 +1,9 @@
 # environment #
 ###############
-.venv/
+#.venv/
 .vscode/
 .env
+.venv
 
 *.code-workspace
 **config.*

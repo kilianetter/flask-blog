@@ -1,6 +1,7 @@
 
 from flask import Blueprint, render_template, url_for, flash, redirect, request, abort 
 from flask_login import current_user, login_required
+from datetime import datetime
 
 ### custom imports
 # Forms
@@ -19,7 +20,7 @@ def new_post():
     form = CreatePostForm()
     if form.validate_on_submit():
         flash('Your post has been created', 'success')
-        post = Post(title=form.title.data, content=form.content.data, author=current_user)
+        post = Post(title=form.title.data, content=form.content.data, author=current_user, date_posted=datetime.utcnow() )
         db.session.add(post)
         db.session.commit()
         return redirect(url_for('main.home'))
